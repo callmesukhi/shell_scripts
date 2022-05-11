@@ -1,5 +1,5 @@
 #!/bin/bash
-#Script to install Docker on Apple chip MacBooks.
+#Script to install Docker Desktop app on Apple chip MacBooks.
 #This script is only useful with MDM when you have to install the app on multiple devices in one go.
 
 #create a var which contains path to the app
@@ -14,7 +14,8 @@ if [ -e "$app_name" ] ; then
     exit 0 #done with no change
   else
     echo "Outdated app exists"
-    killall "Docker" || killall "Docker Desktop"
+    killall "Docker"
+    killall "Docker Desktop"
     rm -rf /Applications/Docker.app #remove the outdated app
     curl 'https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64' -o /tmp/Docker.dmg #download the image file in tmp location
     hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
