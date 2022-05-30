@@ -18,6 +18,7 @@ if [ -e "$app_name" ] ; then
     killall "Docker Desktop"
     rm -rf /Applications/Docker.app #remove the outdated app
     curl 'https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64' -o /tmp/Docker.dmg #download the image file in tmp location
+    hdiutil detach /Volumes/Docker
     hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
     /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
     hdiutil detach /Volumes/Docker #unmount the image after installation
@@ -29,6 +30,7 @@ else
   echo "App does not exist"
   softwareupdate --install-rosetta #install rosetta just to be on safe side
   curl 'https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64' -o /tmp/Docker.dmg #download the image file in tmp location
+  hdiutil detach /Volumes/Docker
   hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
   /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
   hdiutil detach /Volumes/Docker #unmount the image after installation

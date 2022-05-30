@@ -18,6 +18,7 @@ if [ -e "$app_name" ] ; then
     killall "Docker Desktop"
     rm -rf /Applications/Docker.app #remove the outdated app
     curl 'https://desktop.docker.com/mac/main/amd64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-amd64' -o /tmp/Docker.dmg #download the image file in tmp location
+    hdiutil detach /Volumes/Docker
     hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
     /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
     hdiutil detach /Volumes/Docker #unmount the image after installation
@@ -28,6 +29,7 @@ if [ -e "$app_name" ] ; then
 else
   echo "App does not exist"
   curl 'https://desktop.docker.com/mac/main/amd64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-amd64' -o /tmp/Docker.dmg #download the image file in tmp location
+  hdiutil detach /Volumes/Docker
   hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
   /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
   hdiutil detach /Volumes/Docker #unmount the image after installation
