@@ -4,8 +4,16 @@
 
 #create a var which contains path to the app
 app_name="/Applications/Docker.app"
+brew_app_location="/opt/homebrew/bin/docker" #create a var which contains path to the docker install using homebrew
 
 #check if app exists
+if [ -e "$brew_app_location" ] ; then
+  echo "Docker app exists which was installed using homebrew"
+  rm -r /opt/homebrew/Cellar/docker
+  rm -r /opt/homebrew/var/homebrew/linked/docker
+  rm - rf /opt/homebrew/bin/docker
+  echo "Removed docker installed using homebrew"
+fi
 if [ -e "$app_name" ] ; then
   app_version=$(defaults read /Applications/Docker.app/Contents/Info.plist CFBundleShortVersionString) #check app version & store it to a var
   function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
@@ -20,7 +28,7 @@ if [ -e "$app_name" ] ; then
     curl 'https://desktop.docker.com/mac/main/amd64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-amd64' -o /tmp/Docker.dmg #download the image file in tmp location
     hdiutil detach /Volumes/Docker
     hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
-    /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
+    /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="org_name" #run the installer
     hdiutil detach /Volumes/Docker #unmount the image after installation
     rm -rf /tmp/Docker.dmg #delete the file after installation
     echo "New Docker desktop app successfully installed"
@@ -31,10 +39,10 @@ else
   curl 'https://desktop.docker.com/mac/main/amd64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-amd64' -o /tmp/Docker.dmg #download the image file in tmp location
   hdiutil detach /Volumes/Docker
   hdiutil attach /tmp/Docker.dmg #mount the image to Volumes
-  /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="freshbooks" #run the installer
+  /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --allowed-org="org_name" #run the installer
   hdiutil detach /Volumes/Docker #unmount the image after installation
   rm -rf /tmp/Docker.dmg #delete the file after installation
-  echo "Docker app is successfully installed"
+  echo "Docker desktop app is successfully installed"
   exit 0
 fi
 
